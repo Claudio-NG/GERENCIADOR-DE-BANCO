@@ -27,8 +27,8 @@ public class GerenciaBanco {
             if (cpf.length() == 11) break;
             System.out.println("CPF inválido.");
         }
-        Pessoa titular = new Pessoa(nome, sobrenome, cpf);
-        Conta conta = new Conta(titular);
+        Pessoa p = new Pessoa(nome, sobrenome, cpf);
+        Conta conta = new Conta(p);
         int opcao;
         do {
             opcao = exibirMenu(sc);
@@ -67,8 +67,8 @@ public class GerenciaBanco {
                     }
                 }
                 case 4 -> {
-                    System.out.println("Titular: " + titular.getNomeCompleto());
-                    System.out.println("CPF: " + titular.getCpfFormatado());
+                    System.out.println("Titular: " + conta.getTitular().getNomeCompleto());
+                    System.out.println("CPF: " + conta.getTitular().getCpfFormatado());
                 }
                 case 0 -> {
                     System.out.println("Obrigado por utilizar o gerenciaBanco. Até logo!");
@@ -133,6 +133,10 @@ class Conta {
     public Conta(Pessoa titular) {
         this.titular = Objects.requireNonNull(titular);
         this.saldo = BigDecimal.ZERO.setScale(2, RoundingMode.HALF_UP);
+    }
+
+    public Pessoa getTitular() {
+        return titular;
     }
 
     public boolean depositar(BigDecimal valor) {
